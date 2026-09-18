@@ -1,0 +1,16 @@
+<div class="min-h-screen flex flex-col bg-surface text-neutral relative">
+  <!-- Top Navigation Header -->
+  <app-header
+    [title]="appConfig.brandName"
+    [logoUrl]="appConfig.logoUrl"
+    (openBooking)="navigateToTalleres()"
+  />
+
+  <!-- Main View Router Container -->
+  <main class="flex-1 flex flex-col relative w-full pt-16 sm:pt-20 pb-20 bg-surface">
+    <router-outlet />
+  </main>
+
+  <!-- Bottom Navigation Bar for Mobile and Compact Layouts -->
+  <app-bottom-nav />
+</div>
