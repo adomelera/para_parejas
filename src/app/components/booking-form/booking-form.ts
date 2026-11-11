@@ -2,12 +2,15 @@ import {
   ChangeDetectionStrategy,
   Component,
   effect,
+  inject,
   input,
   output,
   signal
 } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BookingSubmission } from '../../models/tantra.models';
+import { buildWhatsAppUrl } from '../../utils/whatsapp';
 
 @Component({
   selector: 'app-booking-form',
@@ -193,6 +196,9 @@ import { BookingSubmission } from '../../models/tantra.models';
 //   `
 })
 export class BookingFormComponent {
+  private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
+
   readonly initialServiceId = input<string>('taller-mensual');
   readonly initialPreferredDate = input<string>('');
   readonly submitBooking = output<BookingSubmission>();
@@ -227,10 +233,12 @@ export class BookingFormComponent {
   }
 
   whatsAppUrl(): string {
-    const text = encodeURIComponent(
-      'Hola Ado, nos gustaría recibir información sobre los talleres y sesiones para parejas en Barcelona.'
-    );
-    return `https://wa.me/34680760473?text=${text}`;
+    return buildWhatsAppUrl({
+      path: this.router.url,
+      from: this.route.snapshot.queryParams['from'],
+      serviceId: this.initialServiceId(),
+      dateLabel: this.initialPreferredDate()
+    });
   }
 
   onSubmit(): void {

@@ -183,6 +183,6 @@ export class SessionsViewComponent {
   }
 
   goToBooking(sessionId: string): void {
-    this.router.navigate(['/reservar'], { queryParams: { service: sessionId } });
+    this.router.navigate(['/reservar'], { queryParams: { service: sessionId, from: 'sesiones' } });
   }
 }

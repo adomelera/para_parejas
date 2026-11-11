@@ -134,6 +134,6 @@ export class WorkshopsViewComponent {
   }
 
   handleReserveWorkshop(dateId: string): void {
-    this.router.navigate(['/reservar'], { queryParams: { service: 'taller-mensual', date: dateId } });
+    this.router.navigate(['/reservar'], { queryParams: { service: 'taller-mensual', date: dateId, from: 'talleres' } });
   }
 }

@@ -149,6 +149,7 @@ import { APP_CONFIG, STUDIO_DATA, THERAPIST_DATA } from '../../data/tantra-data'
         <div class="pt-1">
           <a
             routerLink="/reservar"
+            [queryParams]="{ from: 'espacio' }"
             class="w-full py-3.5 px-5 bg-secondary text-white text-xs sm:text-sm font-semibold rounded-xl text-center hover:bg-secondary-hover transition-colors flex items-center justify-center gap-2"
           >
             <span class="material-symbols-outlined text-[18px]">calendar_today</span>

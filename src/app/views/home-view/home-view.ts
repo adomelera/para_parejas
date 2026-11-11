@@ -411,12 +411,12 @@ export class HomeViewComponent {
 
   goToBookingWithWorkshop(dateId: string): void {
     this.selectedServiceId.set('taller-mensual');
-    this.router.navigate(['/reservar'], { queryParams: { service: 'taller-mensual', date: dateId } });
+    this.router.navigate(['/reservar'], { queryParams: { service: 'taller-mensual', date: dateId, from: 'inicio' } });
   }
 
   goToBookingWithSession(sessionId: string): void {
     this.selectedServiceId.set(sessionId);
-    this.router.navigate(['/reservar'], { queryParams: { service: sessionId } });
+    this.router.navigate(['/reservar'], { queryParams: { service: sessionId, from: 'inicio' } });
   }
 
   handleBookingSubmitted(submission: BookingSubmission): void {
