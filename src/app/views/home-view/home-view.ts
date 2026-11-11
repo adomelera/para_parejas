@@ -379,7 +379,7 @@ import { BookingSubmission } from '../../models/tantra.models';
 
         <div class="pt-3 border-t border-neutral/8 text-xs text-neutral-subtle flex flex-col gap-1">
           <p>© Tantra para Parejas Barcelona · Ado Melera</p>
-          <p>Estudi Gràcia / Eixample · contacto&#64;tantraparaparejas.com</p>
+          <p>Barcelona / Molins de Rei · melera.ado&#64;gmail.com</p>
         </div>
       </footer>
     </div>
