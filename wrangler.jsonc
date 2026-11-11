@@ -1,15 +1,20 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
 
-  // IMPORTANTE: este nombre debe ser EXACTAMENTE el del Worker que ya tiene
-  // el dominio tantraparaparejas.com. Si no coincide, el despliegue crea un
-  // Worker nuevo y el dominio sigue apuntando al antiguo.
-  // Se comprueba en Cloudflare → Workers & Pages → (tu Worker).
-  "name": "para-parejas",
+  // Nombre EXACTO del Worker que tiene el dominio tantraparaparejas.com.
+  // Debe coincidir siempre: si cambia, Wrangler crea un Worker nuevo y el
+  // dominio se queda apuntando al antiguo sin dar ningún error.
+  "name": "weathered-wave-4148",
   "compatibility_date": "2026-11-11",
 
-  // El build de Angular deja el sitio prerenderizado aquí.
+  // Build prerenderizado de Angular (ng build) → sitio 100% estático.
+  // Las peticiones a assets estáticos no consumen cuota ni CPU.
   "assets": {
     "directory": "./dist/app/browser"
+  },
+
+  // Sin observabilidad: este Worker no ejecuta código, solo sirve archivos.
+  "observability": {
+    "enabled": false
   }
 }
