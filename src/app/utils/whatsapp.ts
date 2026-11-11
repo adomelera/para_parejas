@@ -34,6 +34,13 @@ function sectionKey(value: string): string {
   return value.split('?')[0].split('#')[0].replace(/^\/+|\/+$/g, '');
 }
 
+/** Describe la sección actual y, si se conoce, desde dónde se llegó. */
+export function describePage(path: string, from?: string): string {
+  const currentPage = PAGE_LABELS[sectionKey(path)] ?? 'la web';
+  const originPage = from ? PAGE_LABELS[sectionKey(from)] : undefined;
+  return originPage && originPage !== currentPage ? `${currentPage} (llegó desde ${originPage})` : currentPage;
+}
+
 export function buildWhatsAppMessage({ path, from, serviceId, dateLabel }: WhatsAppMessageOptions): string {
   const currentPage = PAGE_LABELS[sectionKey(path)] ?? 'la web';
   const originPage = from ? PAGE_LABELS[sectionKey(from)] : undefined;

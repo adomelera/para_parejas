@@ -15,6 +15,14 @@ export const APP_CONFIG = {
   heroSubtitle: 'Un espacio sobrio, contemporáneo y libre de dogmas para parejas de todo tipo. Clases grupales en Casa Lazar (Barcelona <M> Bogatell) y sesiones privadas online, en Molins de Rei o a domicilio.',
   whatsappNumber: '34680760473',
   contactEmail: 'melera.ado@gmail.com',
+  // Formulario de contacto: Web3Forms (plan gratuito, 250 envíos al mes).
+  // La access key es pública por diseño y los avisos llegan a contactEmail.
+  // Se crea en https://web3forms.com con ese mismo correo.
+  contactForm: {
+    endpoint: 'https://api.web3forms.com/submit',
+    accessKey: 'c5d51ae4-1a28-40ff-afe8-9dcda50daf20',
+    fromName: 'Web Tantra Parejas'
+  },
   studioLocation: 'Clases en Casa Lazar (Barcelona <M> Bogatell) · Sesiones: Molins de Rei, Online o Domicilio',
   classesLocation: 'Casa Lazar · C/ Pere IV, 29, 7º 4ª Ático, 08018 Barcelona (<M> Bogatell)',
   sessionsLocation: 'Online · En Molins de Rei · A domicilio',
