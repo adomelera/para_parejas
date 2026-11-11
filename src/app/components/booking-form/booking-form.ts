@@ -86,6 +86,21 @@ import { buildWhatsAppUrl, describePage } from '../../utils/whatsapp';
             }
           </div>
 
+          <!-- Optional Phone -->
+          <div class="flex flex-col gap-1.5">
+            <label class="text-xs font-semibold text-neutral-dark" for="phone">
+              Teléfono / WhatsApp (opcional)
+            </label>
+            <input
+              id="phone"
+              type="tel"
+              formControlName="phone"
+              placeholder="Ej: +34 600 00 00 00"
+              class="w-full px-4 py-2.5 rounded-xl bg-surface text-neutral-dark text-sm border border-neutral/12 focus:outline-none focus:border-secondary focus:ring-2 focus:ring-secondary/15 transition-all"
+            />
+            <span class="text-[11px] text-neutral-subtle">Si prefieres que te escriba o llame en lugar de por email.</span>
+          </div>
+
           <!-- Service / Experience Selection -->
           <div class="flex flex-col gap-1.5">
             <label class="text-xs font-semibold text-neutral-dark" for="serviceId">
@@ -236,6 +251,7 @@ export class BookingFormComponent {
   readonly form = new FormGroup({
     names: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(2)] }),
     email: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.email] }),
+    phone: new FormControl('', { nonNullable: true }),
     serviceId: new FormControl('taller-mensual', { nonNullable: true, validators: [Validators.required] }),
     modalityLocation: new FormControl('Online (Videollamada)', { nonNullable: true }),
     preferredDate: new FormControl('', { nonNullable: true }),
@@ -287,6 +303,7 @@ export class BookingFormComponent {
     const submission: BookingSubmission = {
       names: this.form.controls.names.value,
       email: this.form.controls.email.value,
+      phone: this.form.controls.phone.value.trim(),
       serviceId: this.form.controls.serviceId.value,
       modalityLocation: isWorkshop
         ? 'Casa Lazar (C/ Pere IV, 29 7º 4ª Ático, Barcelona <M> Bogatell)'
@@ -319,6 +336,7 @@ export class BookingFormComponent {
     this.form.reset({
       names: '',
       email: '',
+      phone: '',
       serviceId: this.initialServiceId() || 'taller-mensual',
       modalityLocation: 'Online (Videollamada)',
       preferredDate: this.initialPreferredDate(),

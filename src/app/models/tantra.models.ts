@@ -99,6 +99,7 @@ export interface StudioSpaceInfo {
 export interface BookingSubmission {
   names: string;
   email: string;
+  phone?: string;
   serviceId: string;
   modalityLocation?: string;
   preferredDate?: string;

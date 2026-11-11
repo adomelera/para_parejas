@@ -49,6 +49,9 @@ export class ContactService {
       Experiencia: service
     };
 
+    if (request.phone) {
+      body['Teléfono / WhatsApp'] = request.phone;
+    }
     if (request.modalityLocation) {
       body['Modalidad'] = request.modalityLocation;
     }
