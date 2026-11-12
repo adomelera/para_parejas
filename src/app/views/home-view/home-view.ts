@@ -113,6 +113,7 @@ import { BookingSubmission } from '../../models/tantra.models';
           </a>
           <a
             href="#laboratorio-casero"
+            (click)="scrollToPracticas($event)"
             class="w-full sm:w-auto text-center px-5 py-3.5 bg-white text-secondary text-xs sm:text-sm font-semibold rounded-xl shadow-xs border border-secondary/15 hover:bg-surface-variant transition-colors flex items-center justify-center gap-2"
           >
             <span class="material-symbols-outlined text-[18px]">auto_stories</span>
@@ -165,7 +166,7 @@ import { BookingSubmission } from '../../models/tantra.models';
       <!-- LABORATORIO EN EL HOGAR (RITUALES) -->
       <section
         id="laboratorio-casero"
-        class="px-4 sm:px-6 py-12 sm:py-16 max-w-2xl mx-auto w-full flex flex-col gap-6"
+        class="px-4 sm:px-6 py-12 sm:py-16 max-w-2xl mx-auto w-full flex flex-col gap-6 scroll-mt-16 sm:scroll-mt-20"
       >
         <div class="flex flex-col gap-1">
           <span class="text-xs text-secondary uppercase tracking-wider font-semibold">
@@ -421,5 +422,20 @@ export class HomeViewComponent {
 
   handleBookingSubmitted(submission: BookingSubmission): void {
     console.log('Nueva reserva recibida:', submission);
+  }
+
+  /** Salto animado a la sección de micro-rituales (los cambios de página van instantáneos). */
+  scrollToPracticas(event: Event): void {
+    const target = document.getElementById('laboratorio-casero');
+
+    if (!target) {
+      return;
+    }
+
+    event.preventDefault();
+
+    const sinMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    target.scrollIntoView({ behavior: sinMovimiento ? 'auto' : 'smooth', block: 'start' });
+    history.replaceState(history.state, '', '#laboratorio-casero');
   }
 }

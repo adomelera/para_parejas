@@ -61,7 +61,6 @@ html, body {
   background-color: var(--color-surface);
   color: var(--color-neutral);
   -webkit-tap-highlight-color: transparent;
-  scroll-behavior: smooth;
 }
 
 h1, h2, h3, .font-editorial {

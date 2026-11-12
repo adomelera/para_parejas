@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { ViewportScroller } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 interface NavItem {
   path: string;
@@ -24,6 +25,7 @@ interface NavItem {
             <!-- Prominent Reserve CTA Button -->
             <a
               [routerLink]="item.path"
+              (click)="onNavClick(item.path)"
               routerLinkActive="scale-105"
               [routerLinkActiveOptions]="{ exact: false }"
               class="flex flex-col items-center justify-center -mt-4 min-w-[56px] group active:scale-95 transition-transform"
@@ -42,6 +44,7 @@ interface NavItem {
             <!-- Standard Nav Tab -->
             <a
               [routerLink]="item.path"
+              (click)="onNavClick(item.path)"
               routerLinkActive="text-primary font-semibold"
               [routerLinkActiveOptions]="{ exact: item.path === '/' }"
               class="flex flex-col items-center justify-center gap-1 min-w-[48px] min-h-[48px] px-2 text-neutral-subtle hover:text-neutral-dark transition-colors"
@@ -58,6 +61,9 @@ interface NavItem {
   `
 })
 export class BottomNavComponent {
+  private readonly router = inject(Router);
+  private readonly viewportScroller = inject(ViewportScroller);
+
   readonly navItems: NavItem[] = [
     { path: '/', label: 'Inicio', icon: 'spa' },
     { path: '/sesiones', label: 'Sesiones', icon: 'favorite' },
@@ -65,4 +71,14 @@ export class BottomNavComponent {
     { path: '/talleres', label: 'Talleres', icon: 'event' },
     { path: '/espacio', label: 'Espacio', icon: 'verified_user' }
   ];
+
+  // Si ya estás en esa página, el router no navega y por tanto no sube: lo hacemos nosotros.
+  onNavClick(path: string): void {
+    const current = this.router.url.split('?')[0];
+    const isCurrent = path === '/' ? current === '/' : current.startsWith(path);
+
+    if (isCurrent) {
+      this.viewportScroller.scrollToPosition([0, 0]);
+    }
+  }
 }
