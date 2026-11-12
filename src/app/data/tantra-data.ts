@@ -160,72 +160,72 @@ export const WORKSHOP_DATA: Workshop = {
       dateStr: '21 Oct de 2026',
       timeStr: '19:00h - 21:00h',
       location: 'Casa Lazar (C/ Pere IV, 29 7º 4ª Ático, Barcelona · <M> Bogatell)',
-      spotsLeft: 10,
-      maxSpots: 10
+      spotsLeft: 8,
+      maxSpots: 8
     },
     {
       id: 'd-2026-11-18',
       dateStr: '18 Nov de 2026',
       timeStr: '19:00h - 21:00h',
       location: 'Casa Lazar (C/ Pere IV, 29 7º 4ª Ático, Barcelona · <M> Bogatell)',
-      spotsLeft: 10,
-      maxSpots: 10
+      spotsLeft: 8,
+      maxSpots: 8
     },
     {
       id: 'd-2026-12-16',
       dateStr: '16 Dic de 2026',
       timeStr: '19:00h - 21:00h',
       location: 'Casa Lazar (C/ Pere IV, 29 7º 4ª Ático, Barcelona · <M> Bogatell)',
-      spotsLeft: 10,
-      maxSpots: 10
+      spotsLeft: 8,
+      maxSpots: 8
     },
     {
       id: 'd-2027-01-20',
       dateStr: '20 Ene de 2027',
       timeStr: '19:00h - 21:00h',
       location: 'Casa Lazar (C/ Pere IV, 29 7º 4ª Ático, Barcelona · <M> Bogatell)',
-      spotsLeft: 10,
-      maxSpots: 10
+      spotsLeft: 8,
+      maxSpots: 8
     },
     {
       id: 'd-2027-02-17',
       dateStr: '17 Feb de 2027',
       timeStr: '19:00h - 21:00h',
       location: 'Casa Lazar (C/ Pere IV, 29 7º 4ª Ático, Barcelona · <M> Bogatell)',
-      spotsLeft: 10,
-      maxSpots: 10
+      spotsLeft: 8,
+      maxSpots: 8
     },
     {
       id: 'd-2027-03-17',
       dateStr: '17 Mar de 2027',
       timeStr: '19:00h - 21:00h',
       location: 'Casa Lazar (C/ Pere IV, 29 7º 4ª Ático, Barcelona · <M> Bogatell)',
-      spotsLeft: 10,
-      maxSpots: 10
+      spotsLeft: 8,
+      maxSpots: 8
     },
     {
       id: 'd-2027-04-21',
       dateStr: '21 Abr de 2027',
       timeStr: '19:00h - 21:00h',
       location: 'Casa Lazar (C/ Pere IV, 29 7º 4ª Ático, Barcelona · <M> Bogatell)',
-      spotsLeft: 10,
-      maxSpots: 10
+      spotsLeft: 8,
+      maxSpots: 8
     },
     {
       id: 'd-2027-05-19',
       dateStr: '19 May de 2027',
       timeStr: '19:00h - 21:00h',
       location: 'Casa Lazar (C/ Pere IV, 29 7º 4ª Ático, Barcelona · <M> Bogatell)',
-      spotsLeft: 10,
-      maxSpots: 10
+      spotsLeft: 8,
+      maxSpots: 8
     },
     {
       id: 'd-2027-06-16',
       dateStr: '16 Jun de 2027',
       timeStr: '19:00h - 21:00h',
       location: 'Casa Lazar (C/ Pere IV, 29 7º 4ª Ático, Barcelona · <M> Bogatell)',
-      spotsLeft: 10,
-      maxSpots: 10
+      spotsLeft: 8,
+      maxSpots: 8
     }
   ]
 };
@@ -238,9 +238,14 @@ export const SESSIONS_DATA: SessionService[] = [
     categoryTag: 'Terapia de Vínculo',
     price: 90,
     durationMinutes: 90,
-    locationNote: 'Online · En Molins de Rei · A domicilio',
+    locationNote: 'Online · A domicilio (Barcelona) · desplazamiento aparte',
     description:
-      'Indicada para momentos de transición, discrepancia en el deseo erótico, estancamiento de la rutina o reconciliación tras crisis afectivas. Mediación somática y diálogo guiado online, en consulta en Molins de Rei o en vuestro domicilio.',
+      'Indicada para momentos de transición, discrepancia en el deseo erótico, estancamiento de la rutina o reconciliación tras crisis afectivas. Mediación somática y diálogo guiado online o en vuestro domicilio, si está cerca de Barcelona.',
+    pack: {
+      sessions: 6,
+      price: 480,
+      validity: '6 meses'
+    },
     suitableFor: [
       'Pérdida o asimetría del deseo erótico',
       'Monotonía y desconexión por ritmos laborales o crianza',
@@ -249,7 +254,7 @@ export const SESSIONS_DATA: SessionService[] = [
     ],
     benefits: [
       'Desescalada de tensiones reactivas mediante regulación vagal',
-      'Disponible online, presencial en Molins de Rei o a domicilio',
+      'Disponible online o a domicilio, con el desplazamiento aparte',
       'Protocolos concretos para continuar en casa'
     ],
     tagColor: 'secondary'
@@ -261,9 +266,14 @@ export const SESSIONS_DATA: SessionService[] = [
     categoryTag: 'Individual',
     price: 60,
     durationMinutes: 60,
-    locationNote: 'Online · En Molins de Rei · A domicilio',
+    locationNote: 'Online · Molins de Rei · A domicilio (+ desplazamiento)',
     description:
-      'Reconexión con el propio mapa corporal, desprogramación de bloqueos emocionales, superación de la autoexigencia o integración de la consciencia tántrica. Disponible online, en consulta en Molins de Rei o a domicilio.',
+      'Reconexión con el propio mapa corporal, desprogramación de bloqueos emocionales, superación de la autoexigencia o integración de la consciencia tántrica. Disponible online, en consulta en Molins de Rei o a domicilio, con el desplazamiento aparte.',
+    pack: {
+      sessions: 6,
+      price: 320,
+      validity: '6 meses'
+    },
     suitableFor: [
       'Autoexigencia, ansiedad por el rendimiento o desconexión física',
       'Integración de vivencias o cierres de etapas previas',
@@ -283,9 +293,9 @@ export const SESSIONS_DATA: SessionService[] = [
     categoryTag: 'Trabajo Corporal',
     price: 90,
     durationMinutes: 90,
-    locationNote: 'En Molins de Rei · A domicilio',
+    locationNote: 'Molins de Rei · A domicilio (+ desplazamiento)',
     description:
-      'Toque bioenergético sobre futón tradicional con aceites templados de sésamo. Orientado a relajar corazas musculares profundas en diafragma, psoas y pelvis. Disponible en Molins de Rei o a domicilio.',
+      'Toque bioenergético sobre futón tradicional con aceites templados de sésamo. Orientado a relajar corazas musculares profundas en diafragma, psoas y pelvis. Disponible en Molins de Rei o a domicilio, con el desplazamiento aparte.',
     suitableFor: [
       'Tensión acumulada en la pelvis, lumbares o diafragma',
       'Sobrecarga mental crónica y necesidad de descanso profundo',
@@ -336,7 +346,7 @@ export const FAQ_DATA: FaqItem[] = [
     id: 'faq-location',
     question: '¿Dónde se realizan las clases y las sesiones privadas?',
     answer:
-      'Las clases grupales de parejas (3er miércoles de mes, de 19:00 a 21:00) se realizan en Casa Lazar: C/ Pere IV, 29, 7º 4ª Ático (08018 Barcelona, metro Bogatell), un espacio de 80 m² con luz natural, equipo de sonido, acústica acondicionada, zona de recepción y terraza de 30 m² con vistas al mar. Las sesiones privadas individuales y de pareja se ofrecen en 3 modalidades flexibles: online por videollamada, presencial en Molins de Rei o directamente a domicilio.'
+      'Las clases grupales de parejas (3er miércoles de mes, de 19:00 a 21:00) se realizan en Casa Lazar: C/ Pere IV, 29, 7º 4ª Ático (08018 Barcelona, metro Bogatell), un espacio de 80 m² con luz natural, equipo de sonido, acústica acondicionada, zona de recepción y terraza de 30 m² con vistas al mar. Las sesiones privadas se ofrecen online por videollamada, en consulta en Molins de Rei o a domicilio. La terapia de vínculo de pareja se hace solo online o en vuestro domicilio, si está cerca de Barcelona. A domicilio, el desplazamiento se suma al precio de la sesión.'
   },
   {
     id: 'faq-1',

@@ -66,6 +66,14 @@ export function buildWhatsAppMessage({ path, from, serviceId, dateLabel }: Whats
   return lines.join('\n');
 }
 
+/** Mensaje para quien no encuentra fecha en el taller y quiere que le avisen. */
+export function buildNotifyWhatsAppUrl(): string {
+  const text = encodeURIComponent(
+    'Hola Ado, me interesa el taller de parejas pero ninguna de las fechas me encaja. ¿Me avisas cuando abras las siguientes? Gracias.'
+  );
+  return `https://wa.me/${APP_CONFIG.whatsappNumber}?text=${text}`;
+}
+
 export function buildWhatsAppUrl(options: WhatsAppMessageOptions): string {
   const text = encodeURIComponent(buildWhatsAppMessage(options));
   return `https://wa.me/${APP_CONFIG.whatsappNumber}?text=${text}`;

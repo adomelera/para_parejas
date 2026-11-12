@@ -26,6 +26,16 @@ import { SessionService } from '../../models/tantra.models';
         </div>
       </div>
 
+      <!-- Pack -->
+      @if (session().pack; as pack) {
+        <div
+          class="flex items-center gap-1.5 rounded-lg bg-secondary/8 text-secondary px-2.5 py-1.5 text-[11px] font-medium"
+        >
+          <span class="material-symbols-outlined text-[14px]">local_offer</span>
+          <span>Pack {{ pack.sessions }} sesiones · {{ pack.price }}€ · válido {{ pack.validity }}</span>
+        </div>
+      }
+
       <!-- Title & Description -->
       <div>
         <h3 class="font-editorial text-lg sm:text-xl text-neutral-dark font-medium leading-snug">

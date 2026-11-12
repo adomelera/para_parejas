@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { BookingFormComponent } from '../../components/booking-form/booking-form';
 import { APP_CONFIG, SESSIONS_DATA, WORKSHOP_DATA } from '../../data/tantra-data';
 import { BookingSubmission } from '../../models/tantra.models';
+import { isWorkshopDatePast, nextWorkshopDate } from '../../utils/workshop-dates';
 
 @Component({
   selector: 'app-booking-view',
@@ -51,7 +52,7 @@ import { BookingSubmission } from '../../models/tantra.models';
           >
             <div>
               <span class="text-xs font-bold block text-neutral-dark">Terapia de Vínculo</span>
-              <span class="text-[11px] text-neutral-muted">90 min · Sesión de pareja</span>
+              <span class="text-[11px] text-neutral-muted">90 min · Pack 6 por 480€</span>
             </div>
             <span class="text-xs font-bold text-secondary">90€</span>
           </button>
@@ -77,7 +78,7 @@ import { BookingSubmission } from '../../models/tantra.models';
           >
             <div>
               <span class="text-xs font-bold block text-neutral-dark">Sesión Individual</span>
-              <span class="text-[11px] text-neutral-muted">60 min · Reconexión</span>
+              <span class="text-[11px] text-neutral-muted">60 min · Pack 6 por 320€</span>
             </div>
             <span class="text-xs font-bold text-tertiary">60€</span>
           </button>
@@ -100,7 +101,7 @@ import { BookingSubmission } from '../../models/tantra.models';
           <strong class="text-neutral-dark block mb-0.5">Clases en Casa Lazar & Sesiones Flexibles</strong>
           <span><strong>Clases de Parejas:</strong> Casa Lazar (C/ Pere IV, 29 7º 4ª Ático, Barcelona &lt;M&gt; Bogatell). Sala de 80 m² con luz natural y equipo de sonido, acondicionada acústicamente, y terraza de 30 m² con vistas al mar.</span>
           <br />
-          <span class="mt-1 block"><strong>Sesiones Privadas:</strong> Disponibles online (videollamada), presenciales en Molins de Rei o directamente a domicilio.</span>
+          <span class="mt-1 block"><strong>Sesiones Privadas:</strong> online (videollamada), en consulta en Molins de Rei (sesión individual y masaje) o a domicilio, con el desplazamiento aparte. La terapia de vínculo, solo online o a domicilio.</span>
         </div>
       </section>
     </div>
@@ -124,7 +125,11 @@ export class BookingViewComponent implements OnInit {
       if (params['date']) {
         const found = this.workshop.dates.find((d) => d.id === params['date']);
         if (found) {
-          this.initialDate.set(`${found.dateStr} (19:00 - 21:00)`);
+          // Si llega una fecha ya celebrada, se ofrece la siguiente disponible.
+          const usable = isWorkshopDatePast(found) ? nextWorkshopDate(this.workshop.dates) : found;
+          if (usable) {
+            this.initialDate.set(`${usable.dateStr} (19:00 - 21:00)`);
+          }
         } else {
           this.initialDate.set(params['date']);
         }

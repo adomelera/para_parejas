@@ -19,7 +19,7 @@ import { APP_CONFIG, STUDIO_DATA, THERAPIST_DATA } from '../../data/tantra-data'
           Espacios & Marco Ético
         </h1>
         <p class="text-sm sm:text-base text-neutral-muted leading-relaxed">
-          Clases de parejas en <strong>Casa Lazar (Barcelona)</strong> con 80 m² de luz natural y terraza de 30 m² al mar. Sesiones privadas en <strong>Molins de Rei</strong>, <strong>online</strong> o <strong>a domicilio</strong>.
+          Clases de parejas en <strong>Casa Lazar (Barcelona)</strong> con 80 m² de luz natural y terraza de 30 m² al mar. Sesiones privadas <strong>online</strong>, en <strong>consulta en Molins de Rei</strong> o <strong>a domicilio</strong>. La terapia de vínculo, solo online o a domicilio.
         </p>
       </section>
 
@@ -137,11 +137,11 @@ import { APP_CONFIG, STUDIO_DATA, THERAPIST_DATA } from '../../data/tantra-data'
             </div>
             <div class="p-2.5 rounded-lg bg-white border border-neutral/6">
               <strong class="text-neutral-dark block font-semibold mb-0.5">En Molins de Rei</strong>
-              <span>Consulta presencial serena con futón y aceites tibios.</span>
+              <span>Consulta presencial serena con futón y aceites tibios. Para sesión individual y masaje.</span>
             </div>
             <div class="p-2.5 rounded-lg bg-white border border-neutral/6">
               <strong class="text-neutral-dark block font-semibold mb-0.5">A Domicilio</strong>
-              <span>Me desplazo a tu domicilio con todo el material.</span>
+              <span>Me desplazo a tu domicilio con todo el material. El desplazamiento se suma al precio.</span>
             </div>
           </div>
         </div>

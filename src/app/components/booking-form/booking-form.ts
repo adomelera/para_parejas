@@ -112,8 +112,8 @@ import { buildWhatsAppUrl, describePage } from '../../utils/whatsapp';
               class="w-full px-4 py-2.5 rounded-xl bg-surface text-neutral-dark text-sm border border-neutral/12 focus:outline-none focus:border-secondary focus:ring-2 focus:ring-secondary/15 transition-all cursor-pointer"
             >
               <option value="taller-mensual">Clases de Parejas (3er miércoles de mes, Casa Lazar) - 40€/pareja</option>
-              <option value="terapia-vinculo">Sesión Privada de Pareja - 90€ (90 min)</option>
-              <option value="sesion-individual">Sesión Individual de Reconexión - 60€ (60 min)</option>
+              <option value="terapia-vinculo">Sesión Privada de Pareja - 90€ (90 min) · pack de 6 por 480€</option>
+              <option value="sesion-individual">Sesión Individual de Reconexión - 60€ (60 min) · pack de 6 por 320€</option>
               <option value="masaje-tantrico">Masaje Somático Tántrico - 90€ (90 min)</option>
               <option value="consulta-previa">Consulta de orientación previa (sin coste)</option>
             </select>
@@ -139,10 +139,21 @@ import { buildWhatsAppUrl, describePage } from '../../utils/whatsapp';
                 formControlName="modalityLocation"
                 class="w-full px-4 py-2.5 rounded-xl bg-surface text-neutral-dark text-sm border border-neutral/12 focus:outline-none focus:border-secondary focus:ring-2 focus:ring-secondary/15 transition-all cursor-pointer"
               >
-                <option value="Online (Videollamada)">Online (por videollamada)</option>
-                <option value="En Molins de Rei (Consulta)">En Molins de Rei (consulta presencial acondicionada)</option>
-                <option value="A Domicilio (Barcelona y área metropolitana)">A Domicilio (me desplazo a vuestro hogar)</option>
+                @for (option of modalityOptions(); track option.value) {
+                  <option [value]="option.value">{{ option.label }}</option>
+                }
               </select>
+              @if (form.controls.serviceId.value === 'terapia-vinculo') {
+                <span class="text-[11px] text-neutral-subtle">
+                  La terapia de vínculo se hace online o en vuestro domicilio. La consulta de Molins de Rei es solo para
+                  sesión individual y masaje.
+                </span>
+              }
+              @if (form.controls.serviceId.value === 'masaje-tantrico') {
+                <span class="text-[11px] text-neutral-subtle">
+                  El masaje es presencial: en consulta en Molins de Rei o en tu domicilio.
+                </span>
+              }
             </div>
           }
 
@@ -260,6 +271,35 @@ export class BookingFormComponent {
     botcheck: new FormControl(false, { nonNullable: true })
   });
 
+  /**
+   * Cada experiencia tiene sus modalidades: el masaje es presencial (consulta o domicilio),
+   * la terapia de vínculo no se hace en Molins de Rei, y la individual admite las tres.
+   */
+  modalityOptions(): { value: string; label: string }[] {
+    const serviceId = this.form.controls.serviceId.value;
+    const isCoupleTherapy = serviceId === 'terapia-vinculo';
+    const isMassage = serviceId === 'masaje-tantrico';
+    const options: { value: string; label: string }[] = [];
+
+    if (!isMassage) {
+      options.push({ value: 'Online (Videollamada)', label: 'Online (por videollamada)' });
+    }
+
+    if (!isCoupleTherapy) {
+      options.push({
+        value: 'En Molins de Rei (Consulta)',
+        label: 'En Molins de Rei (consulta presencial acondicionada)'
+      });
+    }
+
+    options.push({
+      value: 'A Domicilio (Barcelona y área metropolitana)',
+      label: 'A Domicilio (Barcelona y cercanías · se suma el desplazamiento)'
+    });
+
+    return options;
+  }
+
   constructor() {
     effect(() => {
       const initService = this.initialServiceId();
@@ -272,6 +312,14 @@ export class BookingFormComponent {
       const initDate = this.initialPreferredDate();
       if (initDate) {
         this.form.controls.preferredDate.setValue(initDate);
+      }
+    });
+
+    // Si cambia la experiencia y la modalidad elegida ya no se ofrece, se pasa a la primera disponible.
+    this.form.controls.serviceId.valueChanges.subscribe(() => {
+      const allowed = this.modalityOptions();
+      if (!allowed.some((option) => option.value === this.form.controls.modalityLocation.value)) {
+        this.form.controls.modalityLocation.setValue(allowed[0].value);
       }
     });
   }
@@ -333,12 +381,13 @@ export class BookingFormComponent {
   }
 
   private resetForm(): void {
+    const serviceId = this.initialServiceId() || 'taller-mensual';
     this.form.reset({
       names: '',
       email: '',
       phone: '',
-      serviceId: this.initialServiceId() || 'taller-mensual',
-      modalityLocation: 'Online (Videollamada)',
+      serviceId,
+      modalityLocation: serviceId === 'masaje-tantrico' ? 'En Molins de Rei (Consulta)' : 'Online (Videollamada)',
       preferredDate: this.initialPreferredDate(),
       notes: '',
       consentAgreed: true,

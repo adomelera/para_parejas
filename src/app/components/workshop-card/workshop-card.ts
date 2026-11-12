@@ -1,5 +1,7 @@
-import { ChangeDetectionStrategy, Component, effect, input, output, signal } from '@angular/core';
-import { Workshop } from '../../models/tantra.models';
+import { ChangeDetectionStrategy, Component, effect, input, output, signal, untracked } from '@angular/core';
+import { Workshop, WorkshopDate } from '../../models/tantra.models';
+import { buildNotifyWhatsAppUrl } from '../../utils/whatsapp';
+import { isWorkshopDatePast, nextWorkshopDate } from '../../utils/workshop-dates';
 
 @Component({
   selector: 'app-workshop-card',
@@ -32,7 +34,7 @@ import { Workshop } from '../../models/tantra.models';
           class="absolute bottom-3 right-3 bg-secondary/90 backdrop-blur-md text-white text-[11px] px-2.5 py-1 rounded-full flex items-center gap-1.5"
         >
           <span class="material-symbols-outlined text-[14px]">groups</span>
-          <span>Máx. 8-10 parejas</span>
+          <span>Máx. 8 plazas</span>
         </div>
       </div>
 
@@ -87,9 +89,10 @@ import { Workshop } from '../../models/tantra.models';
               @for (d of workshop().dates; track d.id) {
                 <button
                   type="button"
-                  (click)="selectedDateId.set(d.id)"
-                  class="p-3 rounded-xl border text-left flex items-center justify-between gap-2.5 sm:gap-3 transition-all cursor-pointer"
-                  [class]="selectedDateId() === d.id ? 'bg-secondary/8 border-secondary text-neutral-dark shadow-2xs ring-1 ring-secondary/20' : 'bg-surface border-neutral/10 text-neutral-muted hover:bg-surface-variant'"
+                  [disabled]="isPast(d)"
+                  (click)="selectDate(d.id)"
+                  class="p-3 rounded-xl border text-left flex items-center justify-between gap-2.5 sm:gap-3 transition-all"
+                  [class]="dateClasses(d)"
                 >
                   <div class="flex items-center gap-2.5 min-w-0 flex-1">
                     <span class="material-symbols-outlined text-[18px] text-secondary shrink-0">
@@ -100,26 +103,48 @@ import { Workshop } from '../../models/tantra.models';
                       <span class="text-[11px] text-neutral-muted block leading-tight truncate sm:whitespace-normal">{{ d.timeStr }} · {{ d.location }}</span>
                     </div>
                   </div>
-                  <span
-                    class="text-[11px] px-2.5 py-1 rounded-full font-medium shrink-0 whitespace-nowrap text-center inline-flex items-center justify-center leading-none"
-                    [class]="d.spotsLeft <= 4 ? 'bg-primary/15 text-primary' : 'bg-tertiary/20 text-tertiary'"
-                  >
-                    {{ d.spotsLeft }} plazas
-                  </span>
+                  @if (isPast(d)) {
+                    <span
+                      class="text-[11px] px-2.5 py-1 rounded-full font-medium shrink-0 whitespace-nowrap text-center inline-flex items-center justify-center leading-none bg-neutral/8 text-neutral-subtle"
+                    >
+                      Ya celebrado
+                    </span>
+                  } @else {
+                    <span
+                      class="text-[11px] px-2.5 py-1 rounded-full font-medium shrink-0 whitespace-nowrap text-center inline-flex items-center justify-center leading-none"
+                      [class]="d.spotsLeft <= 4 ? 'bg-primary/15 text-primary' : 'bg-tertiary/20 text-tertiary'"
+                    >
+                      {{ d.spotsLeft }} plazas
+                    </span>
+                  }
                 </button>
               }
             </div>
           </div>
         }
 
+        <!-- Aviso de próximas fechas -->
+        <a
+          [href]="notifyUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="group text-xs text-secondary hover:text-secondary-hover transition-colors self-start inline-flex items-center gap-1"
+        >
+          <span class="material-symbols-outlined text-[14px] no-underline" aria-hidden="true">notifications</span>
+          <span class="underline underline-offset-2 decoration-secondary/40 group-hover:decoration-secondary"
+            >¿No te encaja ninguna fecha? Avísame y te escribo cuando abra las siguientes</span
+          >
+        </a>
+
         <!-- CTA Action -->
         <button
           type="button"
+          [disabled]="!selectedDateId()"
           (click)="reserve.emit(selectedDateId())"
-          class="w-full py-3.5 px-6 bg-primary text-white font-semibold text-sm rounded-xl shadow-md text-center hover:bg-primary-hover transition-all active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
+          class="w-full py-3.5 px-6 bg-primary text-white font-semibold text-sm rounded-xl shadow-md text-center hover:bg-primary-hover transition-all active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer disabled:bg-neutral/20 disabled:text-neutral-subtle disabled:shadow-none disabled:cursor-not-allowed disabled:active:scale-100"
         >
           <span class="material-symbols-outlined text-[18px]">event_available</span>
-          <span>Reservar Plaza para la Fecha Seleccionada</span>
+          <span>{{ selectedDateId() ? 'Reservar Plaza para la Fecha Seleccionada' : 'Sin fechas disponibles' }}</span>
         </button>
       </div>
     </article>
@@ -129,14 +154,40 @@ export class WorkshopCardComponent {
   readonly workshop = input.required<Workshop>();
   readonly reserve = output<string>();
 
-  readonly selectedDateId = signal<string>('d-2026-10-21');
+  readonly selectedDateId = signal<string>('');
+  readonly notifyUrl = buildNotifyWhatsAppUrl();
 
   constructor() {
+    // La fecha preseleccionada es siempre la siguiente que se puede reservar.
     effect(() => {
       const dates = this.workshop().dates;
-      if (dates && dates.length > 0 && (!this.selectedDateId() || !dates.some(d => d.id === this.selectedDateId()))) {
-        this.selectedDateId.set(dates[0].id);
+      const current = untracked(this.selectedDateId);
+      const isUsable = dates.some((date) => date.id === current && !isWorkshopDatePast(date));
+
+      if (!isUsable) {
+        this.selectedDateId.set(nextWorkshopDate(dates)?.id ?? '');
       }
     });
+  }
+
+  isPast(date: WorkshopDate): boolean {
+    return isWorkshopDatePast(date);
+  }
+
+  selectDate(id: string): void {
+    const date = this.workshop().dates.find((item) => item.id === id);
+    if (date && !this.isPast(date)) {
+      this.selectedDateId.set(id);
+    }
+  }
+
+  dateClasses(date: WorkshopDate): string {
+    if (this.isPast(date)) {
+      return 'bg-surface border-neutral/6 text-neutral-subtle opacity-60 cursor-not-allowed';
+    }
+    if (this.selectedDateId() === date.id) {
+      return 'bg-secondary/8 border-secondary text-neutral-dark shadow-2xs ring-1 ring-secondary/20 cursor-pointer';
+    }
+    return 'bg-surface border-neutral/10 text-neutral-muted hover:bg-surface-variant cursor-pointer';
   }
 }

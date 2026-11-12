@@ -277,7 +277,7 @@ import { BookingSubmission } from '../../models/tantra.models';
             Sesiones Privadas
           </h2>
           <p class="text-sm text-neutral-muted leading-relaxed">
-            Acompañamiento terapéutico somático para parejas e individuos. Disponible en 3 modalidades: online por videollamada, en Molins de Rei o a domicilio.
+            Acompañamiento terapéutico somático para parejas e individuos: online por videollamada, en consulta en Molins de Rei o a domicilio. La terapia de vínculo, solo online o a domicilio.
           </p>
         </div>
 

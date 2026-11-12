@@ -19,7 +19,7 @@ import { APP_CONFIG, SESSIONS_DATA } from '../../data/tantra-data';
           Sesiones Privadas
         </h1>
         <p class="text-sm sm:text-base text-neutral-muted leading-relaxed">
-          Acompañamiento terapéutico somático para parejas e individuos. Disponible en 3 modalidades según vuestra conveniencia: <strong>online</strong>, <strong>presencial en Molins de Rei</strong> o <strong>a domicilio</strong>.
+          Acompañamiento terapéutico somático para parejas e individuos: <strong>online</strong>, en <strong>consulta en Molins de Rei</strong> o <strong>a domicilio</strong>. La terapia de vínculo, solo online o en vuestro domicilio.
         </p>
 
         <!-- Guarantee Pill -->
@@ -57,7 +57,7 @@ import { APP_CONFIG, SESSIONS_DATA } from '../../data/tantra-data';
           </div>
           <strong class="font-editorial text-sm text-neutral-dark font-semibold">En Molins de Rei</strong>
           <p class="text-xs text-neutral-muted leading-relaxed">
-            Consulta privada y acogedora con futón tradicional y máxima discreción.
+            Consulta privada y acogedora con futón tradicional y máxima discreción. Para sesión individual y masaje.
           </p>
         </div>
 
@@ -67,7 +67,7 @@ import { APP_CONFIG, SESSIONS_DATA } from '../../data/tantra-data';
           </div>
           <strong class="font-editorial text-sm text-neutral-dark font-semibold">A Domicilio</strong>
           <p class="text-xs text-neutral-muted leading-relaxed">
-            Me desplazo con todo el material necesario a vuestro hogar en Barcelona y cercanías.
+            Me desplazo con todo el material necesario a vuestro hogar en Barcelona y cercanías. El desplazamiento se suma al precio de la sesión.
           </p>
         </div>
       </section>

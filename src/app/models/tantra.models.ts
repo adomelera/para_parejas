@@ -56,6 +56,12 @@ export interface SessionService {
   benefits: string[];
   tagColor: 'primary' | 'secondary' | 'tertiary';
   locationNote?: string;
+  /** Bono de sesiones, si la experiencia lo ofrece. */
+  pack?: {
+    sessions: number;
+    price: number;
+    validity: string;
+  };
 }
 
 export interface FaqItem {
